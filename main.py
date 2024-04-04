@@ -9,8 +9,8 @@ import os
 
 # Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
-db = client['usuarios']
-usuarios_collection = db['usuarios']
+db = client['trainview']
+usuarios_collection = db['trainview']
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
