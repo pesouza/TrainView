@@ -13,7 +13,8 @@ import os
 #db = client['trainview']
 #usuarios_collection = db['trainview']
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+#app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+from app import app
 
 # Caminho para o arquivo index.py
 INDEX_FILE = os.path.join(os.getcwd(), 'index.py')
