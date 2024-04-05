@@ -40,14 +40,6 @@ login_modal = dbc.Modal(
     size="sm",
 )
 
-# Callback para abrir o modal de login ao carregar a página
-app.clientside_callback(
-    ClientsideFunction(namespace='clientside', function_name='openLoginModal'),
-    Output('login-modal', 'is_open'),
-    [Input('dummy', 'children')],
-    [State('login-modal', 'is_open')]
-)
-
 # Criar modal de registro
 signup_modal = dbc.Modal(
     [
@@ -147,9 +139,9 @@ app.layout = html.Div([
 
 # Callback para alternar o modal de login
 @app.callback(
-    Output("login-modal", "is_open"),
+    Output('login-modal', 'is_open'),
     [Input("login-toggle", "n_clicks"), Input("close-login", "n_clicks")],
-    [State("login-modal", "is_open")],
+    [State("login-modal", "is_open")]
 )
 def toggle_login_modal(n1, n2, is_open):
     if n1 or n2:
