@@ -8,7 +8,8 @@ from notes_form import *
 # import callbacks
 
 app.layout = dbc.Container(
-        style={'--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
+        style={"padding": "50px 50px",
+               '--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
                '--dark-bg-color': '#212529',    # Cor de fundo no modo escuro
                '--light-text-color': '#000000',  # Cor do texto no modo claro
                '--dark-text-color': '#ffffff'},  # Cor do texto no modo escuro
@@ -34,7 +35,7 @@ app.layout = dbc.Container(
                 ], md="3")
 
             ]),
-        ], fluid=True, style={"padding": "50px 50px"})
+        ], fluid=True)
 
 @app.callback(Output('video-player', 'playbackRate'),
               [Input('slider-playback-rate', 'value')])
