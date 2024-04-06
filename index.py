@@ -9,7 +9,7 @@ from notes_form import *
 
 
 
-app.layout = dbc.Container(
+layout = dbc.Container(
         style={"padding": "50px 50px",
                '--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
                '--dark-bg-color': '#212529',    # Cor de fundo no modo escuro
