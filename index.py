@@ -19,8 +19,7 @@ app.layout = dbc.Container(
                         children=[
                             html.Img(id="logo", src=app.get_asset_url("logo_dark.png"), height=50, 
                             style={"margin-bottom": "20px"}),
-                            html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", 
-                            style={"color": "var(--dark-text-color)", "marginLeft": "20px", "display": "inline"}),
+                            html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "color": "var(--light-text-color)", "marginLeft": "20px", "display": "inline"}),
                         ]
                     ),
 
