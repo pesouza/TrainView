@@ -14,11 +14,11 @@ def get_videos(user):
     return videos
 
 def get_scenes(user, video):
-    scenes = scenes_collection.find({'user': user; 'video': video})
+    scenes = scenes_collection.find({'video': video})
     return scenes
 
 def get_notes(user, video):
-    notes = notes_collection.find({'user': user; 'video': video})
+    notes = notes_collection.find({'video': video})
     return notes
 
 # =================================
