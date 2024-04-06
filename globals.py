@@ -20,12 +20,12 @@ else:
 # for url in MY_VIDEOS.values():
 #     if url not in DICT_SCENES.keys():
 #         DICT_SCENES[url] = {}
-with open('dict_scenes.json', 'w') as f:
-    json.dump(DICT_SCENES, f)
+#with open('dict_scenes.json', 'w') as f:
+#    json.dump(DICT_SCENES, f)
 
 
 # =================================
 # My videos
 DICT_NOTES = json.load(open('dict_notes.json')) if "dict_notes.json" in os.listdir() else {}
-with open('dict_notes.json', 'w') as f:
-    json.dump(DICT_NOTES, f)
+#with open('dict_notes.json', 'w') as f:
+#    json.dump(DICT_NOTES, f)
