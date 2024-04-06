@@ -2,6 +2,19 @@
 /*Fonts ––––––––––––––––––––––––––––––––––––––––––––––––––*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
+/* Estilos para o modo claro */
+:root {
+  --bg-color: var(--light-bg-color);
+  --text-color: var(--light-text-color);
+}
+
+/* Estilos para o modo escuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: var(--dark-bg-color);
+    --text-color: var(--dark-text-color);
+  }
+}
 
 /* Grid –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* Base Styles –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -14,7 +27,8 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Open Sans", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: rgb(0, 0, 0);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 /* Blockquotes –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -85,7 +99,7 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
   padding: .5rem 1rem;
   font-size: 1.5rem;
   border-radius: .3rem;
-  color: #eaeaea !important;
+  color: #000 !important;
   /* border: #90909044; */
 }
 /* 

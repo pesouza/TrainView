@@ -46,10 +46,10 @@ signup_modal = dbc.Modal(
         dbc.ModalHeader("Registrar"),
         dbc.ModalBody(
             [
-                dcc.Input(id='new-username', type='text', className='form-control', placeholder='Digite seu novo nome de usuário', style={'color': '#000'}),
-                dcc.Input(id='email', type='email', className='form-control', placeholder='Digite seu email', style={'color': '#000'}),
-                dcc.Input(id='new-password', type='password', className='form-control', placeholder='Digite sua nova senha', style={'color': '#000'}),
-                dcc.Input(id='confirm-password', type='password', className='form-control', placeholder='Confirme sua nova senha', style={'color': '#000'}),
+                dcc.Input(id='new-username', type='text', className='form-control', placeholder='Digite seu novo nome de usuário'),
+                dcc.Input(id='email', type='email', className='form-control', placeholder='Digite seu email'),
+                dcc.Input(id='new-password', type='password', className='form-control', placeholder='Digite sua nova senha'),
+                dcc.Input(id='confirm-password', type='password', className='form-control', placeholder='Confirme sua nova senha'),
             ]
         ),
         dbc.ModalFooter(
@@ -63,21 +63,27 @@ signup_modal = dbc.Modal(
     size="sm",
 )
 
+# Definir cores personalizadas para os modos claro e escuro
 app.layout = html.Div([
-    html.Div(id='dummy', style={'display': 'none'}),  # Elemento de gatilho para abrir o modal de login ao carregar a página
+    html.Div(id='dummy', style={'display': 'none'}),  
     dbc.Container(
         className='mt-5',
         fluid=True,
+        style={'--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
+               '--dark-bg-color': '#212529',    # Cor de fundo no modo escuro
+               '--light-text-color': '#000000',  # Cor do texto no modo claro
+               '--dark-text-color': '#ffffff'},  # Cor do texto no modo escuro
         children=[
             dbc.Row(
-                className='justify-content-between align-items-center',  # Alinhar os elementos horizontalmente e centralizar verticalmente
+                className='justify-content-between align-items-center',  
                 children=[
                     dbc.Col(
                         html.Div(
                             children=[
                                 html.Img(id="logo", src=app.get_asset_url("bg_aeria.png"), height=50,
                                 style={"margin-bottom": "20px"}),
-                                html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "marginLeft": "20px", "display": "inline", "color": "#007bff"}),  # Cor azul para o texto do cabeçalho
+                                html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", 
+                                     "color": "var(--light-text-color)","marginLeft": "20px", "display": "inline"}),  
                             ]
                         ),
                         className='my-2'
@@ -98,7 +104,7 @@ app.layout = html.Div([
                 className='justify-content-center',
                 children=[
                     dbc.Col(
-                        html.H1('Sistema de Análise de Imagens de Treinos Esportivos', className='display-4'),  # Cor azul para o cabeçalho principal
+                        html.H1('Sistema de Análise de Imagens de Treinos Esportivos', className='display-4'),  
                         className='text-center',
                     ),
                 ]
@@ -107,7 +113,8 @@ app.layout = html.Div([
                 className='justify-content-center',
                 children=[
                     dbc.Col(
-                        html.H2('Analise e aperfeiçoe seus treinos esportivos!', style={"color": "#6c757d"}),  # Cor cinza para o texto de destaque
+                        html.H2('Analise e aperfeiçoe seus treinos esportivos!', 
+                        style={"color": "var(--light-text-color)"}),  
                         className='text-center',
                     ),
                 ]
@@ -140,7 +147,7 @@ app.layout = html.Div([
 # Callback para alternar o modal de login
 @app.callback(
     Output('login-modal', 'is_open'),
-    [Input("login-toggle", "n_clicks"), Input("close-login", "n_clicks")],
+    [Input("login-toggle", "n_clicks"), Input("login-button", "n_clicks")],
     [State("login-modal", "is_open")]
 )
 def toggle_login_modal(n1, n2, is_open):
@@ -151,7 +158,7 @@ def toggle_login_modal(n1, n2, is_open):
 # Callback para alternar o modal de registro
 @app.callback(
     Output("signup-modal", "is_open"),
-    [Input("signup-toggle", "n_clicks"), Input("close-signup", "n_clicks")],
+    [Input("signup-toggle", "n_clicks"), Input("signup-button", "n_clicks")],
     [State("signup-modal", "is_open")],
 )
 def toggle_signup_modal(n1, n2, is_open):

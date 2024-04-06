@@ -8,6 +8,10 @@ from notes_form import *
 # import callbacks
 
 app.layout = dbc.Container(
+        style={'--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
+               '--dark-bg-color': '#212529',    # Cor de fundo no modo escuro
+               '--light-text-color': '#000000',  # Cor do texto no modo claro
+               '--dark-text-color': '#ffffff'},  # Cor do texto no modo escuro
         children=[
             dbc.Row([
                 dbc.Col([
@@ -15,7 +19,8 @@ app.layout = dbc.Container(
                         children=[
                             html.Img(id="logo", src=app.get_asset_url("logo_dark.png"), height=50, 
                             style={"margin-bottom": "20px"}),
-                            html.H2("TrainView - Trainning Analyzer", style={"color": "white", "font-weight": "bold", "font-size": "32px", "marginLeft": "20px", "display": "inline"}),
+                            html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", 
+                            style={"color": "var(--dark-text-color)", "marginLeft": "20px", "display": "inline"}),
                         ]
                     ),
 
