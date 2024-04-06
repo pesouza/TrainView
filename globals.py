@@ -1,5 +1,6 @@
 import os
 import json
+from pymongo import MongoClient
 
 # Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
