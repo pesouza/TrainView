@@ -177,9 +177,10 @@ def process_login_and_signup(login_clicks, signup_clicks, username, password, ne
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                return 'Login bem-sucedido!'
+                os.system(f"python {INDEX_FILE}")  # Executa o arquivo index.py
+                return html.Div('Login bem-sucedido!', className='alert alert-success')
             else:
-                return 'Credenciais inválidas. Tente novamente.'
+                return html.Div('Credenciais inválidas. Tente novamente.', className= 'alert alert-danger')
     elif signup_clicks:
         if new_username and email and new_password and new_password == confirm_password:
             hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
@@ -196,7 +197,7 @@ def process_login_and_signup(login_clicks, signup_clicks, username, password, ne
     else:
         return dash.no_update
 
-# Callback para redirecionar para index.py após o login
+""" # Callback para redirecionar para index.py após o login
 @app.callback(
     Output('dummy', 'children'),
     [Input('login-button', 'n_clicks')],
@@ -209,7 +210,7 @@ def redirect_to_index(n_clicks, username, password):
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
                 os.system(f"python {INDEX_FILE}")
-    return ''
+    return '' """
 
 if __name__ == '__main__':
     app.run_server(debug=True)
