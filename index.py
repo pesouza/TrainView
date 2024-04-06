@@ -20,7 +20,7 @@ layout = dbc.Container(
                 dbc.Col([
                     html.Div(
                         children=[
-                            html.Img(id="logo", src=app.get_asset_url("logo_dark.png"), height=50, 
+                            html.Img(id="logo", src=app.get_asset_url("bg_aeria.png"), height=50, 
                             style={"margin-bottom": "20px"}),
                             html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "color": "var(--light-text-color)", "marginLeft": "20px", "display": "inline"}),
                         ]

@@ -64,7 +64,7 @@ button{
 .card{
   margin-top: 10px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
-  color: #FFFFFF; 
+  color: var(--text-color);
 }
 
 .button.button-primary, button.button-primary, input[type="submit"].button-primary, input[type="reset"].button-primary, input[type="button"].button-primary {
@@ -80,7 +80,7 @@ button{
 
 .has-value.Select--single>.Select-control .Select-value .Select-value-label, 
 .has-value.is-pseudo-focused.Select--single>.Select-control .Select-value .Select-value-label {
-  color: #cccccc;
+  color: var(--text-color);
 }
 
 /* Forms –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -99,7 +99,7 @@ input[type="email"], input[type="number"], input[type="search"], input[type="tex
   padding: .5rem 1rem;
   font-size: 1.5rem;
   border-radius: .3rem;
-  color: #000 !important;
+  color: var(--text-color) !important;
   /* border: #90909044; */
 }
 /* 
