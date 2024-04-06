@@ -1,8 +1,8 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import html, dcc
 
-app = dash.Dash(__name__)
+from app import app
+
 
 # Definir as páginas
 from landpage import layout as landpage_layout
