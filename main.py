@@ -166,6 +166,21 @@ def toggle_signup_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+# Callback para redirecionar para index.py após o login
+@app.callback(
+    Output('dummy', 'children'),
+    [Input('login-button', 'n_clicks')],
+    [State('username', 'value'), State('password', 'value')]
+)
+def redirect_to_index(n_clicks, username, password):
+    if n_clicks:
+        if username and password:
+            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+            user = usuarios_collection.find_one({'username': username})
+            if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
+                os.system(f"python {INDEX_FILE}")
+    return ''
+
 @app.callback(
     Output('output-message', 'children'),
     [Input('login-button', 'n_clicks'), Input('signup-button', 'n_clicks')],
@@ -177,7 +192,6 @@ def process_login_and_signup(login_clicks, signup_clicks, username, password, ne
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                os.system(f"python {INDEX_FILE}")  # Executa o arquivo index.py
                 return html.Div('Login bem-sucedido!', className='alert alert-success')
             else:
                 return html.Div('Credenciais inválidas. Tente novamente.', className= 'alert alert-danger')
@@ -197,20 +211,7 @@ def process_login_and_signup(login_clicks, signup_clicks, username, password, ne
     else:
         return dash.no_update
 
-""" # Callback para redirecionar para index.py após o login
-@app.callback(
-    Output('dummy', 'children'),
-    [Input('login-button', 'n_clicks')],
-    [State('username', 'value'), State('password', 'value')]
-)
-def redirect_to_index(n_clicks, username, password):
-    if n_clicks:
-        if username and password:
-            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-            user = usuarios_collection.find_one({'username': username})
-            if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                os.system(f"python {INDEX_FILE}")
-    return '' """
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
