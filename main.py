@@ -1,7 +1,7 @@
 import dash
 import bcrypt
-from dash import dcc
-from dash import html
+from dash import Dash, html, dcc, Input, Output, State, clientside_callback
+from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State, ClientsideFunction
 import dash_bootstrap_components as dbc
 from pymongo import MongoClient
@@ -178,8 +178,10 @@ def redirect_to_index(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                os.system(f"python {INDEX_FILE}")
-    return ''
+                return dcc.Location(pathname='/index', id='login-success-url')
+
+    raise PreventUpdate
+
 
 @app.callback(
     Output('output-message', 'children'),

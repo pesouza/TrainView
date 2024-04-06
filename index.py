@@ -7,6 +7,8 @@ from left_video import *
 from notes_form import *
 # import callbacks
 
+
+
 app.layout = dbc.Container(
         style={"padding": "50px 50px",
                '--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
