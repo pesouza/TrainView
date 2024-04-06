@@ -17,7 +17,7 @@ usuarios_collection = db['users']
 from app import app
 
 # Caminho para o arquivo index.py
-INDEX_FILE = 'index.py'
+INDEX_FILE = '/var/www/TranView/index.py'
 
 # Criar modal de login
 login_modal = dbc.Modal(
