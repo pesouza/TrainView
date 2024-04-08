@@ -180,11 +180,11 @@ def redirect_to_index(n_clicks, username, password):
 
 # Callback para redirecionar para index.py após o login
 @app.callback(
-    [Output('storage-params', 'data')],
+    Output('storage-params', 'data'),
     [Input('login-button', 'n_clicks')],
     [State('username', 'value'), State('password', 'value')]
 )
-def redirect_to_index(n_clicks, username, password):
+def store_username(n_clicks, username, password):
     if n_clicks:
         if username and password:
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()

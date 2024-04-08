@@ -48,14 +48,14 @@ def update_playbackRate(value):
 
 # Callback para exibir o nome de usuário
 @app.callback(Output('username-output', 'children'),
-              [Input('page-content', 'children')])
-def display_username(children):
-    username = stored_params['username'] #get_username_from_cookie()
-    if username:
-        return f'Bem-vindo, {username}!'
+              [Input('page-content', 'children')],
+              [State('stored-params', 'data')])
+def display_username(children, stored_params):
+    if stored_params and 'username' in stored_params:
+        return f'Bem-vindo, {stored_params["username"]}!'
     else:
         raise PreventUpdate
-
+        
 # Callback para exibir o nome 
 if __name__ == '__main__':
     app.run_server(debug=True)
