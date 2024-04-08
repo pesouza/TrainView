@@ -62,6 +62,7 @@ signup_modal = dbc.Modal(
 
 # Definir cores personalizadas para os modos claro e escuro
 layout = html.Div([
+    dcc.Store(id='stored-params', data={}),
     html.Div(id='dummy', style={'display': 'none'}),  
     dbc.Container(
         className='mt-5',
@@ -163,6 +164,12 @@ def toggle_signup_modal(n1, n2, is_open):
         return not is_open
     return is_open
 
+@app.callback(
+    Output('stored-params', 'data'),
+    Input('username', 'value'))
+def store_params(username_value):
+    return {'username': username_value}
+
 # Callback para redirecionar para index.py após o login
 @app.callback(
     Output('dummy', 'children'),
@@ -175,7 +182,6 @@ def redirect_to_index(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                USERNAME = user
                 response = make_response('ok')
                 response.set_cookie('username', username)
                 print(request.cookies.get('username'))
