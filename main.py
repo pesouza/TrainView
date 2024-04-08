@@ -15,7 +15,7 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    [dash.dependencies.Output('page-content', 'children'), dash.dependencies.Output('stored-params', 'data')],
+    [dash.dependencies.Output('page-content', 'children')],
     [dash.dependencies.Input('stored-params', 'data'), dash.dependencies.Input('url', 'pathname')])
 def display_page(pathname, stored_params):
     if pathname == '/':
