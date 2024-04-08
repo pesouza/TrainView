@@ -18,6 +18,10 @@ def get_videos(user):
     videos = videos_collection.find({'username': user})
     return videos
 
+def get_video(user, video):
+    video = video_collection.findone({'username': user, 'video': video})
+    return video
+
 def get_scenes(user, video):
     scenes = scenes_collection.find({'username': user, 'video': video})
     return scenes
@@ -39,7 +43,8 @@ MY_VIDEOS = {
     }
 
 for url in MY_VIDEOS.items():
-    add_video("admin",  url.key, url.value)
+    if not get_video("admin", url[0]):
+        add_video("admin",  url[0], url[1])
 
 if "dict_scenes.json" in os.listdir():
     DICT_SCENES = json.load(open('dict_scenes.json'))
