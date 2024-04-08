@@ -53,9 +53,8 @@ def update_playbackRate(value):
 @app.callback(Output('username-output', 'children'),
               [Input('page-content', 'children')])
 def display_username(children):
-    username = get_username_from_cookie()
+    username = USERNAME #get_username_from_cookie()
     if username:
-        USERNAME = username
         return f'Bem-vindo, {username}!'
     else:
         raise PreventUpdate
