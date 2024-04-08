@@ -62,7 +62,6 @@ signup_modal = dbc.Modal(
 
 # Definir cores personalizadas para os modos claro e escuro
 layout = html.Div([
-    dcc.Store(id='stored-params', data={}),
     html.Div(id='dummy', style={'display': 'none'}),  
     dbc.Container(
         className='mt-5',
@@ -167,7 +166,7 @@ def toggle_signup_modal(n1, n2, is_open):
 # Callback para redirecionar para index.py após o login
 @app.callback(
     [Output('dummy', 'children')],
-    [Input('login-button', 'n_clicks'), Input('stored-params', 'data')],
+    [Input('login-button', 'n_clicks')],
     [State('username', 'value'), State('password', 'value')]
 )
 def redirect_to_index(n_clicks, username, password):
@@ -176,7 +175,7 @@ def redirect_to_index(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                return {'username': username}, dcc.Location(href='/index', id='url')
+                return dcc.Location(href='/index', id='url')
 
     raise PreventUpdate
 
