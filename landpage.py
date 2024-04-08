@@ -177,6 +177,7 @@ def redirect_to_index(n_clicks, username, password):
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
                 response = make_response(dcc.Location(href='/index', id='url'))
                 response.set_cookie('username', username)
+                print(request.cookies.get('username'))
                 return response
 
     raise PreventUpdate
