@@ -11,7 +11,7 @@ from notes_form import *
 
 # Função para obter o nome de usuário da URL
 def get_username_from_url():
-    url_string = urllib.parse.unquote_plus(dcc.Location(id='redirect-to-dashboard', refresh=True).search.replace('?', ''))
+    url_string = urllib.parse.unquote_plus(dcc.Location(id='url', refresh=True).search.replace('?', ''))
     url_params = urllib.parse.parse_qs(url_string)
     return url_params.get('username', [None])[0]
 

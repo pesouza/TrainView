@@ -176,7 +176,7 @@ def redirect_to_index(n_clicks, username, password):
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
                 USERNAME = username
-                return dcc.Location(href='/index', search=f'?username={username}', id='redirect-to-dashboard')
+                return dcc.Location(href='/index', search=f'?username={username}', id='url')
 
     raise PreventUpdate
 
