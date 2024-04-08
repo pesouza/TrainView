@@ -2,24 +2,28 @@ import os
 import json
 from pymongo import MongoClient
 
+
 # Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['trainview']
 videos_collection = db['videos']
-scenes.collection = db['scenes']
+scenes_collection = db['scenes']
 notes_collection = db['notes']
 
 # =================================
+def add_video(user, video, url):
+    videos_collection.insert_one({'username': user, 'video': video, 'url': url})
+
 def get_videos(user):
-    videos = videos_collection.find({'user': user})
+    videos = videos_collection.find({'username': user})
     return videos
 
 def get_scenes(user, video):
-    scenes = scenes_collection.find({'video': video})
+    scenes = scenes_collection.find({'username': user, 'video': video})
     return scenes
 
 def get_notes(user, video):
-    notes = notes_collection.find({'video': video})
+    notes = notes_collection.find({'username': user, 'video': video})
     return notes
 
 # =================================
@@ -34,7 +38,8 @@ MY_VIDEOS = {
     #"JOGO vs VAL 2 - 24/10/2021": "https://www.youtube.com/watch?v=MxqECYnJK6I",
     }
 
-
+for url in MY_VIDEOS.items():
+    add_video("admin",  url.key, url.value)
 
 if "dict_scenes.json" in os.listdir():
     DICT_SCENES = json.load(open('dict_scenes.json'))
