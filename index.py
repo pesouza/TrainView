@@ -8,9 +8,6 @@ from left_video import *
 from notes_form import *
 # import callbacks
 
-# Função para obter o nome de usuário do cookie
-def get_username_from_cookie():
-    return request.cookies.get('username')
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
@@ -24,6 +21,7 @@ layout = dbc.Container(
                 dbc.Col([
                     html.Div(
                         children=[
+                            html.H1(f"Bem-vindo, {username}!"),
                             html.Img(id="logo", src=app.get_asset_url("bg_aeria.png"), height=50, 
                             style={"margin-bottom": "20px"}),
                             html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "color": "var(--light-text-color)", "marginLeft": "20px", "display": "inline"}),
