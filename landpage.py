@@ -165,22 +165,7 @@ def toggle_signup_modal(n1, n2, is_open):
 
 # Callback para redirecionar para index.py após o login
 @app.callback(
-    Output('dummy', 'children'),
-    [Input('login-button', 'n_clicks')],
-    [State('username', 'value'), State('password', 'value')]
-)
-def redirect_to_index(n_clicks, username, password):
-    if n_clicks:
-        if username and password:
-            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-            user = usuarios_collection.find_one({'username': username})
-            if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                return dcc.Location(href='/index', id='url')
-    raise PreventUpdate
-
-# Callback para redirecionar para index.py após o login
-@app.callback(
-    Output('storage-params', 'data'),
+    [Output('storage-params', 'data'), Output('dummy', 'children')],
     [Input('login-button', 'n_clicks')],
     [State('username', 'value'), State('password', 'value')]
 )
@@ -190,7 +175,7 @@ def store_username(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                return {'username':username}
+                return {'username':username}, dcc.Location(href='/index', id='url')
     raise PreventUpdate
 
 @app.callback(
