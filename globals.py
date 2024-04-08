@@ -19,7 +19,7 @@ def get_videos(user):
     return videos
 
 def get_video(user, video):
-    video = videos_collection.findone({'username': user, 'video': video})
+    video = videos_collection.find_one({'username': user, 'video': video})
     return video
 
 def get_scenes(user, video):
