@@ -169,7 +169,7 @@ def toggle_signup_modal(n1, n2, is_open):
     [Input('login-button', 'n_clicks')],
     [State('username', 'value'), State('password', 'value')]
 )
-def store_username(n_clicks, username, password):
+def store_username_and_redirect_to_index(n_clicks, username, password):
     if n_clicks:
         if username and password:
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
