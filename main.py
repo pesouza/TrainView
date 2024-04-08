@@ -9,7 +9,6 @@ from landpage import layout as landpage_layout
 from index import layout as dashboard_layout
 
 app.layout = html.Div([
-    dcc.Store(id='stored-params', data={}),
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
 ])
