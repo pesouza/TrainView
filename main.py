@@ -15,8 +15,10 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    [dash.dependencies.Output('page-content', 'children')],
-    [dash.dependencies.Input('stored-params', 'data'), dash.dependencies.Input('url', 'pathname')])
+    dash.dependencies.Output('page-content', 'children'),
+    [dash.dependencies.Input('stored-params', 'data'), dash.dependencies.Input('url', 'pathname')],
+    dash.dependencies.State('stored-params', 'data')
+    )
 def display_page(pathname, stored_params):
     if pathname == '/':
         return landpage_layout
