@@ -62,6 +62,7 @@ signup_modal = dbc.Modal(
 
 # Definir cores personalizadas para os modos claro e escuro
 layout = html.Div([
+    dcc.Store(id='stored-params', data={}),
     html.Div(id='dummy', style={'display': 'none'}),  
     dbc.Container(
         className='mt-5',
