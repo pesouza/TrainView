@@ -58,7 +58,7 @@ def update_playbackRate(value):
 @app.callback(Output('username-output', 'children'),
               [Input('url', 'search')])
 def display_username(search):
-    username = USERNAME #get_username_from_url()
+    username = get_username_from_url()
     if username:
         return f'Bem-vindo, {username}!'
     else:
