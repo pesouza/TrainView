@@ -9,6 +9,8 @@ from left_video import *
 from notes_form import *
 # import callbacks
 
+USERNAME = ''
+USERNAME = get_username_from_url()
 
 # Função para obter o nome de usuário da URL
 def get_username_from_url():
