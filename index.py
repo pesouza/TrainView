@@ -15,9 +15,7 @@ def get_username_from_url():
     url_params = urllib.parse.parse_qs(url_string)
     return url_params.get('username', [None])[0]
 
-USERNAME = ''
-USERNAME = get_username_from_url()
-
+#USERNAME = get_username_from_url()
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
