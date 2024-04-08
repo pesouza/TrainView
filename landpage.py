@@ -5,7 +5,7 @@ from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State, ClientsideFunction
 import dash_bootstrap_components as dbc
 from pymongo import MongoClient
-import os
+from flask import Flask, request, make_response
 
 
 # Conectar ao MongoDB
@@ -175,7 +175,8 @@ def redirect_to_index(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = usuarios_collection.find_one({'username': username})
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                USERNAME = username
+                response = make_response("Login bem-sucedido!")
+                response.set_cookie('username', username)
                 return dcc.Location(href='/index', search=f'?username={username}', id='url')
 
     raise PreventUpdate

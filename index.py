@@ -2,20 +2,15 @@ from dash import html, dcc
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
-import urllib.parse
 
 from app import app
 from left_video import *
 from notes_form import *
 # import callbacks
 
-# Função para obter o nome de usuário da URL
-def get_username_from_url():
-    url_string = urllib.parse.unquote_plus(dcc.Location(id='url', refresh=True).search.replace('?', ''))
-    url_params = urllib.parse.parse_qs(url_string)
-    return url_params.get('username', [None])[0]
-
-#USERNAME = get_username_from_url()
+# Função para obter o nome de usuário do cookie
+def get_username_from_cookie():
+    return request.cookies.get('username')
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
@@ -56,13 +51,15 @@ def update_playbackRate(value):
 
 # Callback para exibir o nome de usuário
 @app.callback(Output('username-output', 'children'),
-              [Input('url', 'search')])
-def display_username(search):
-    username = get_username_from_url()
+              [Input('page-content', 'children')])
+def display_username(children):
+    username = get_username_from_cookie()
     if username:
+        USERNAME = username
         return f'Bem-vindo, {username}!'
     else:
         raise PreventUpdate
 
+# Callback para exibir o nome 
 if __name__ == '__main__':
     app.run_server(debug=True)
