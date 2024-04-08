@@ -23,7 +23,7 @@ def display_page(pathname, stored_params):
     elif pathname == '/index':
         if stored_params and 'username' in stored_params:
             username = stored_params['username']
-            return dashboard_layout(username)
+        return dashboard_layout(username)
     else:
         return '404'
 
