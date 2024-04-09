@@ -173,6 +173,7 @@ def redirect_to_index(n_clicks, username, password):
             user = get_user(username)
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
                 USERNAME = username
+                print(USERNAME)
                 return dcc.Location(href='/index', id='url')
     raise PreventUpdate
 
