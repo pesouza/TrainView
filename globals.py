@@ -10,9 +10,14 @@ usuarios_collection = db['users']
 videos_collection = db['videos']
 scenes_collection = db['scenes']
 notes_collection = db['notes']
-current_user = db['current_user']
+sports_collection = db['sports']
+movies_collection = db['movies']
 
 # =================================
+# Current user functions
+
+current_user = db['current_user']
+
 def set_current_user(username):
     current_user.delete_many({})
     current_user.insert_one({'username': username})
@@ -21,6 +26,7 @@ def get_current_user():
     user = current_user.find_one({})
     return user['username'] if user else None
 
+# =================================
 def get_user(username):
     user = usuarios_collection.find_one({'username': username})
     return user
@@ -28,6 +34,7 @@ def get_user(username):
 def save_user(user): 
     usuarios_collection.insert_one(user)
 
+# =================================
 def add_video(user, video, url):
     videos_collection.insert_one({'username': user, 'video': video, 'url': url})
 
@@ -37,46 +44,98 @@ def get_videos(user):
 
 def get_video(user, video):
     video = videos_collection.find_one({'username': user, 'video': video})
-    return video
+    return video if video else None 
+
+def delete_video(user, video):
+    videos_collection.delete_one({'username': user, 'video': video})
+
+# =================================
+def add_scene(user, video, scene, position):
+    scenes_collection.insert_one({'username': user, 'video': video, 'scene': scene,  'position': position})
+
+def delete_scene(user, video, scene):
+    scenes_collection.delete_one({'username': user, 'video': video, 'scene': scene})
+    
+def get_scene(user, video, scene):
+    scene = scenes_collection.find_one({'username': user, 'video': video, 'scene': scene})
+    return scene if scene else None
 
 def get_scenes(user, video):
     scenes = scenes_collection.find({'username': user, 'video': video})
     return scenes
+
+# =================================
+def add_notes(user, video, scene, notes):
+    notes_collection.insert_one({ 'username': user, 'video': video, 'scene': scene, 'notes': notes})
+
+def get_note(user, video, scene):
+    note = notes_collection.find_one({'username': user, 'video': video, 'scene': scene})
+    return note if note else None
+
+def update_note(user, video, scene, notes):
+    notes_collection.update_one({'username': user, 'video': video, 'scene': scene}, {'$set': {'notes': notes}})
+
+def delete_note(user, video, scene):
+    notes_collection.delete_one({'username': user, 'video': video, 'scene': scene})
 
 def get_notes(user, video):
     notes = notes_collection.find({'username': user, 'video': video})
     return notes
 
 # =================================
+def add_sport(sport):
+    sports_collection.insert_one({'sport': sport})
+
+def get_sports():
+    sports = sports_collection.find()
+    return sports 
+
+def get_sport(sport):
+    sport = sports_collection.find_one({'sport': sport})
+    return sport if sport else None 
+
+def remove_sport(sport): 
+    sports_collection.delete_one({'sport': sport})
+
+# =================================
+def add_movie(sport,mov):
+    mov_value = mov.lower().replace(" ", "_")  # Convertendo o movimento para o formato de valor
+    movies_collection.insert_one({'sport': sport, 'mov': mov, 'mov_value': mov_value})
+
+def get_movies():
+    movies = movies_collection.find()
+    options = [{'label': movie['mov'], 'value': movie['mov_value']} for movie in movies]
+    return options
+
+def remove_movie(mov): 
+    movies_collection.delete_one({'sport': sport,'movie': mov})
+
+# =================================
+
 # My videos
+USERNAME = get_current_user()
+MY_VIDEOS = get_videos(USERNAME)
 
-MY_VIDEOS = {
-    "Forehand compilation": 'https://www.youtube.com/watch?v=_7xV_CE8y28&list=PLjZrvsjkqCCgVIeTfKa-pipLiqZ-pXWjL',
-    #"JOGO vs VITOR - 09/10/2021": "https://www.youtube.com/watch?v=B7M1vhZ2C6c",
-    #"TREINO COM ALINE - 12/10/2021": "https://www.youtube.com/watch?v=waD4JJ1_pBQ",
-    #"JOGO vs FLÁVIO - 26/09/2021": "https://www.youtube.com/watch?v=6yoK7kCSRb8",
-    #"JOGO vs VAL - 22/10/2021": "https://www.youtube.com/watch?v=LuQUnj8nztg",
-    #"JOGO vs VAL 2 - 24/10/2021": "https://www.youtube.com/watch?v=MxqECYnJK6I",
-    }
+#{
+#    "Forehand compilation": 'https://www.youtube.com/watch?v=_7xV_CE8y28&list=PLjZrvsjkqCCgVIeTfKa-pipLiqZ-pXWjL',
+    #}
 
-for url in MY_VIDEOS.items():
-    if not get_video("admin", url[0]):
-        add_video("admin",  url[0], url[1])
+#for url in MY_VIDEOS.items():
+#    if not get_video("admin", url[0]):
+#        add_video("admin",  url[0], url[1])
 
-if "dict_scenes.json" in os.listdir():
-    DICT_SCENES = json.load(open('dict_scenes.json'))
-else:
-    DICT_SCENES = {j: {} for i, j in MY_VIDEOS.items()}
+# =================================
+DICT_SCENES = get_scenes(USERNAME, MY_VIDEOS[0]["video"])
 
-# for url in MY_VIDEOS.values():
-#     if url not in DICT_SCENES.keys():
-#         DICT_SCENES[url] = {}
-#with open('dict_scenes.json', 'w') as f:
-#    json.dump(DICT_SCENES, f)
+#if "dict_scenes.json" in os.listdir():
+#    DICT_SCENES = json.load(open('dict_scenes.json'))
+#else:
+#    DICT_SCENES = {j: {} for i, j in MY_VIDEOS.items()}
 
 
 # =================================
-# My videos
-DICT_NOTES = json.load(open('dict_notes.json')) if "dict_notes.json" in os.listdir() else {}
+DICT_NOTES = get_notes(USERNAME, MY_VIDEOS[0]["video"])
+
+#DICT_NOTES = json.load(open('dict_notes.json')) if "dict_notes.json" in os.listdir() else {}
 #with open('dict_notes.json', 'w') as f:
 #    json.dump(DICT_NOTES, f)

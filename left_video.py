@@ -7,6 +7,14 @@ import dash
 from app import app
 from globals import *
 
+def add_movie(sport, mov):
+    mov_value = mov.lower().replace(" ", "_")  # Convertendo o movimento para o formato de valor
+    movies_collection.insert_one({'sport': sport, 'mov': mov, 'mov_value': mov_value})
+
+def get_movies():
+    movies = movies_collection.find()
+    options = [{'label': movie['mov'], 'value': movie['mov_value']} for movie in movies]
+    return options
 
 l_controls = dbc.Col([
                     dcc.Dropdown(id="dd-my-videos",
@@ -20,7 +28,14 @@ l_controls = dbc.Col([
                             dbc.CardBody([
                                 dbc.Input(id="inpt-cut-name", placeholder="Nome do corte", 
                                 type="text"),
-                                dcc.RadioItems(
+                                dbc.Button("Adicionar Golpe", id="btn-add-movie", color="primary"),
+                                dbc.Button("Adicionardcc.RadioItems(
+                                    id='rd-cut-kind',
+                                    options=get_movies(),
+                                    value=get_movies()[0]['value'],  # Defina o valor padrão como o primeiro da lista obtida
+                                    labelStyle={'display': 'inline-block', 'margin': '10px'}
+                                )
+"""                                 dcc.RadioItems(
                                     id='rd-cut-kind',
                                     options=[{'label': 'Forehand', 'value': 'forehand'},
                                         {'label': 'Backhand', 'value': 'backhand'},
@@ -33,7 +48,7 @@ l_controls = dbc.Col([
                                         {'label': 'Outro', 'value': 'outro'}],
                                     value='forehand', labelStyle={'display': 'inline-block', 
                                     'margin': '10px'}),
-                                
+ """                                
                                 dbc.Row([
                                     dbc.Button("Início: 0", color="secondary", 
                                     id="btn-set-start", size="lg", style={"width": "150px"}),
@@ -99,6 +114,40 @@ def update_btn_end1(n_clicks, value):
 
 
 @app.callback(Output('dd-cut-scenes', 'options'),
+              [Input('btn-create-cut', 'n_clicks'), Input('btn-delete-cut', 'n_clicks'),
+               Input('video-player', 'url')],
+              [State('btn-set-start', 'children'),
+               State('btn-set-end', 'children'), State('inpt-cut-name', 'value'),
+               State('rd-cut-kind', 'value'), State('dd-cut-scenes', 'value')])
+def create_cut_1(create_cut, delete_cut, url, start, end,
+                  cut_name, cut_kind, selected_scene):
+    if create_cut:
+        start = float(start.split(":")[1])
+        end = float(end.split(":")[1])
+        add_scene('user', 'video', cut_kind.upper() + " : " + cut_name, [start, end])
+    
+    elif delete_cut:
+        if selected_scene:
+            delete_scene('user', 'video', selected_scene)
+
+    options = [{"label": scene['scene'], "value": scene['scene']} for scene in get_scenes('user', 'video')]
+    return options
+
+@app.callback(Output('video-player', 'seekTo'),
+              [Input('dd-cut-scenes', 'value'), 
+               State('video-player', 'url'), Input('video-player', 'currentTime')])
+def control_scene_time1(cut_scene, url, current_time):
+    if cut_scene:
+        scene = get_scene('user', 'video', cut_scene)
+        if scene:
+            start_time = scene['position'][0]
+            if current_time < start_time:
+                return start_time
+            elif current_time > scene['position'][1]:
+                return start_time
+                
+# ------------------------------- #
+""" @app.callback(Output('dd-cut-scenes', 'options'),
 
               [Input('btn-create-cut', 'n_clicks'), Input('btn-delete-cut', 'n_clicks'),
               Input('video-player', 'url')],
@@ -130,4 +179,4 @@ def control_scene_time1(cut_scene, url, current_time):
         if current_time < DICT_SCENES[url][cut_scene][0]:
             return DICT_SCENES[url][cut_scene][0]
         elif current_time > DICT_SCENES[url][cut_scene][1]:
-            return DICT_SCENES[url][cut_scene][0]
+            return DICT_SCENES[url][cut_scene][0] """
