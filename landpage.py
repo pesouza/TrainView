@@ -162,7 +162,7 @@ def toggle_signup_modal(n1, n2, is_open):
 
 # Callback para redirecionar para index.py após o login
 @app.callback(
-    [Output('stored-params', 'data'), Output('dummy', 'children')],
+    Output('dummy', 'children'),
     Input('login-button', 'n_clicks'),
     [State('username', 'value'), State('password', 'value')]
 )
