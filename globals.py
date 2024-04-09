@@ -120,7 +120,7 @@ def remove_movie(mov):
 #        add_video("admin",  url[0], url[1])
 
 # =================================
-DICT_SCENES = get_scenes(USERNAME, MY_VIDEOS[0]["video"])
+#DICT_SCENES = get_scenes(USERNAME, MY_VIDEOS[0]["video"])
 
 #if "dict_scenes.json" in os.listdir():
 #    DICT_SCENES = json.load(open('dict_scenes.json'))
@@ -129,7 +129,7 @@ DICT_SCENES = get_scenes(USERNAME, MY_VIDEOS[0]["video"])
 
 
 # =================================
-DICT_NOTES = get_notes(USERNAME, MY_VIDEOS[0]["video"])
+#DICT_NOTES = get_notes(USERNAME, MY_VIDEOS[0]["video"])
 
 #DICT_NOTES = json.load(open('dict_notes.json')) if "dict_notes.json" in os.listdir() else {}
 #with open('dict_notes.json', 'w') as f:
