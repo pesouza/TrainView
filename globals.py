@@ -102,8 +102,8 @@ def add_movie(sport,mov):
     mov_value = mov.lower().replace(" ", "_")  # Convertendo o movimento para o formato de valor
     movies_collection.insert_one({'sport': sport, 'mov': mov, 'mov_value': mov_value})
 
-def get_movies():
-    movies = movies_collection.find()
+def get_movies(sport):
+    movies = movies_collection.find({'sport': sport})
     options = [{'label': movie['mov'], 'value': movie['mov_value']} for movie in movies]
     return options
 

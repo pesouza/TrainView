@@ -18,8 +18,8 @@ def get_movies():
 
 l_controls = dbc.Col([
                     dcc.Dropdown(id="dd-my-videos",
-                            options=[{"label": i, "value": j} for i, j in MY_VIDEOS.items()],
-                            value=list(MY_VIDEOS.values())[-1],
+                            options=[{"label": i['video'], "value": i['url']} for i in MY_VIDEOS],
+                            value=MY_VIDEOS[-1]['video'] if MY_VIDEOS else None,
                             style={"margin-top": "10px"},
                             placeholder="Selecione seu vídeo"),
 
@@ -110,13 +110,13 @@ def create_cut_1(create_cut, delete_cut, url, start, end,
     if create_cut:
         start = float(start.split(":")[1])
         end = float(end.split(":")[1])
-        add_scene('user', 'video', cut_kind.upper() + " : " + cut_name, [start, end])
+        add_scene(USERNAME, url, cut_kind.upper() + " : " + cut_name, [start, end])
     
     elif delete_cut:
         if selected_scene:
-            delete_scene('user', 'video', selected_scene)
+            delete_scene(USERNAME, url, selected_scene)
 
-    options = [{"label": scene['scene'], "value": scene['scene']} for scene in get_scenes('user', 'video')]
+    options = [{"label": scene['scene'], "value": scene['scene']} for scene in get_scenes(USERNAME, url)]
     return options
 
 @app.callback(Output('video-player', 'seekTo'),
@@ -124,7 +124,7 @@ def create_cut_1(create_cut, delete_cut, url, start, end,
                State('video-player', 'url'), Input('video-player', 'currentTime')])
 def control_scene_time1(cut_scene, url, current_time):
     if cut_scene:
-        scene = get_scene('user', 'video', cut_scene)
+        scene = get_scene(USERNAME, url, cut_scene)
         if scene:
             start_time = scene['position'][0]
             if current_time < start_time:
