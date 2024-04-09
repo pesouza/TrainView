@@ -24,7 +24,7 @@ MY_SPORTS = get_sports()
 l_controls = dbc.Col([
                     dcc.Dropdown(id="dd-my-videos",
                             options=[{"label": i['video'], "value": i['url']} for i in MY_VIDEOS],
-                            value=MY_VIDEOS[-1]['url'] if MY_VIDEOS else None,
+                            value=MY_VIDEOS[0]['url'] if MY_VIDEOS else None,
                             style={"margin-top": "10px"},
                             placeholder="Selecione seu vídeo"),
 
