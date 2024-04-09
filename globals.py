@@ -3,9 +3,7 @@ import json
 from pymongo import MongoClient
 
 
-USERNAME = ''  
-
-# Conectar ao MongoDB
+ # Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['trainview']
 usuarios_collection = db['users']

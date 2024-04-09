@@ -3,6 +3,7 @@ from dash import html, dcc
 
 from app import app
 
+USERNAME= ''
 
 # Definir as páginas
 from landpage import layout as landpage_layout

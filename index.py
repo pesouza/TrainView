@@ -4,10 +4,8 @@ import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 
 from app import app
-from globals import *
 from left_video import *
 from notes_form import *
-
 
 
 # Layout da página principal (tela inicial)
