@@ -7,7 +7,6 @@ import dash_bootstrap_components as dbc
 from pymongo import MongoClient
 from flask import Flask, request, make_response
 
-from main import USERNAME
 from globals import *
 
 
@@ -173,8 +172,7 @@ def redirect_to_index(n_clicks, username, password):
             hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
             user = get_user(username)
             if user and bcrypt.checkpw(password.encode(), user['password'].encode()):
-                USERNAME = username
-                print(USERNAME)
+                set_current_user(username)
                 return dcc.Location(href='/index', id='url')
     raise PreventUpdate
 

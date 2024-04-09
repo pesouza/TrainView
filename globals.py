@@ -10,8 +10,17 @@ usuarios_collection = db['users']
 videos_collection = db['videos']
 scenes_collection = db['scenes']
 notes_collection = db['notes']
+current_user = db['current_user']
 
 # =================================
+def set_current_user(username):
+    current_user.delete_many({})
+    current_user.insert_one({'username': username})
+
+def get_current_user():
+    user = current_user.find_one({})
+    return user['username'] if user else None
+
 def get_user(username):
     user = usuarios_collection.find_one({'username': username})
     return user

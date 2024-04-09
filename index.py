@@ -6,7 +6,8 @@ from dash.exceptions import PreventUpdate
 from app import app
 from left_video import *
 from notes_form import *
-from landpage import USERNAME
+from globals import *
+
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
@@ -50,7 +51,7 @@ def update_playbackRate(value):
 @app.callback(Output('username-output', 'children'),
               Input('page-content', 'children'),)
 def display_username(children):
-    return f'Bem-vindo, {USERNAME}!'
+    return f'Bem-vindo, {get_current_user()}!'
 
 # Callback para exibir o nome 
 if __name__ == '__main__':
