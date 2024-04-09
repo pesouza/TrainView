@@ -33,12 +33,20 @@ l_controls = dbc.Col([
                 dbc.Input(
                     id="inpt-cut-name",
                     placeholder="Nome do corte",
-                    type="text"
+                    type="text",
+                    style={"margin-bottom": "10px"}
                 ),
                 dbc.Button(
                     "Adicionar Golpe",
                     id="btn-add-movie",
-                    color="primary"
+                    color="primary",
+                    className="mr-2"
+                ),
+                dbc.Input(
+                    id="inpt-mov",
+                    placeholder="Novo golpe",
+                    type="text",
+                    style={"margin-top": "10px"}
                 ),
                 dbc.Row([
                     dbc.Button(
@@ -116,6 +124,7 @@ l_controls = dbc.Col([
         style={"margin-top": "20px"}
     )
 ])
+
 
 @app.callback(
     Output("collapse", "is_open"),
