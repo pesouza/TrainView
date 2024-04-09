@@ -17,7 +17,7 @@ app.layout = html.Div([
     dash.dependencies.Output('page-content', 'children'),
     dash.dependencies.Input('url', 'pathname'),
     )
-def display_page(stored_params, pathname):
+def display_page(pathname):
     if pathname == '/':
         return landpage_layout
     elif pathname == '/index':
