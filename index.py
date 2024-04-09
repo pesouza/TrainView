@@ -6,10 +6,11 @@ from dash.exceptions import PreventUpdate
 from app import app
 from left_video import *
 from notes_form import *
-
+from main import USERNAME
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
+        id="page-content",
         style={"padding": "50px 50px",
                '--light-bg-color': '#ffffff',  # Cor de fundo no modo claro
                '--dark-bg-color': '#212529',    # Cor de fundo no modo escuro

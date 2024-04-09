@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 from pymongo import MongoClient
 from flask import Flask, request, make_response
 
+from main import USERNAME
 from globals import *
 
 
