@@ -29,7 +29,7 @@ l_controls = dbc.Col([
                                 dbc.Input(id="inpt-cut-name", placeholder="Nome do corte", 
                                 type="text"),
                                 dbc.Button("Adicionar Golpe", id="btn-add-movie", color="primary"),
-                                dbc.Button("Adicionardcc.RadioItems(
+                                dcc.RadioItems(
                                     id='rd-cut-kind',
                                     options=get_movies(),
                                     value=get_movies()[0]['value'],  # Defina o valor padrão como o primeiro da lista obtida
@@ -145,7 +145,7 @@ def control_scene_time1(cut_scene, url, current_time):
                 return start_time
             elif current_time > scene['position'][1]:
                 return start_time
-                
+
 # ------------------------------- #
 """ @app.callback(Output('dd-cut-scenes', 'options'),
 
