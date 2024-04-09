@@ -12,46 +12,101 @@ MY_VIDEOS = get_videos(USERNAME)
 MY_SPORTS = get_sports()
 
 l_controls = dbc.Col([
-    dcc.RadioItems(
-        id='rd-sports',
-        options=[{'label': sport, 'value': sport} for sport in MY_SPORTS],
-        value=MY_SPORTS[0] if MY_SPORTS else None,
-        labelStyle={'display': 'inline-block', 'margin': '10px'}
-    ),
     dcc.Dropdown(
         id="dd-my-videos",
         options=[{"label": i['video'], "value": i['url']} for i in MY_VIDEOS],
-        value=MY_VIDEOS[-1]['url'] if MY_VIDEOS else None,
+        value=MY_VIDEOS[0]['url'] if MY_VIDEOS else None,
         style={"margin-top": "10px"},
         placeholder="Selecione seu vídeo"
     ),
+
+    dcc.RadioItems(
+        id='rd-sports',
+        options=[{"label": sport, "value": sport} for sport in MY_SPORTS],
+        value=MY_SPORTS[0] if MY_SPORTS else None,
+        labelStyle={'display': 'inline-block', 'margin': '10px'}
+    ),
+
     dbc.Collapse(
-        dbc.Card([
+        dbc.Card([   
             dbc.CardBody([
-                dbc.Input(id="inpt-cut-name", placeholder="Nome do corte", type="text"),
-                dbc.Button("Adicionar Golpe", id="btn-add-movie", color="primary"),
-                dcc.RadioItems(
-                    id='rd-cut-kind',
-                    options=get_movies(),
-                    value=get_movies()[0]['value'] if get_movies() else None,  
-                    labelStyle={'display': 'inline-block', 'margin': '10px'}
+                dbc.Input(
+                    id="inpt-cut-name",
+                    placeholder="Nome do corte",
+                    type="text"
+                ),
+                dbc.Button(
+                    "Adicionar Golpe",
+                    id="btn-add-movie",
+                    color="primary"
                 ),
                 dbc.Row([
-                    dbc.Button("Início: 0", color="secondary", id="btn-set-start", size="lg", style={"width": "150px"}),
-                    dbc.Button("Fim: 10", color="secondary", id="btn-set-end", size="lg", style={"width": "150px"}),
-                    dbc.Button("Criar corte", color="info", id="btn-create-cut", size="lg", style={"width": "150px"})
+                    dbc.Button(
+                        "Início: 0",
+                        color="secondary",
+                        id="btn-set-start",
+                        size="lg",
+                        style={"width": "150px"}
+                    ),
+
+                    dbc.Button(
+                        "Fim: 10",
+                        color="secondary",
+                        id="btn-set-end",
+                        size="lg",
+                        style={"width": "150px"}
+                    ),
+
+                    dbc.Button(
+                        "Criar corte",
+                        color="info",
+                        id="btn-create-cut",
+                        size="lg",
+                        style={"width": "150px"}
+                    )
                 ]),
             ])
-        ], color="dark", outline=True),
+        ],
+        color="dark",
+        outline=True),
         id="collapse",
         is_open=False,
         style={"margin-top": "25px", "margin-bottom": "25px"}
     ),
+
     dbc.Row([
-        dbc.Col(dbc.Button("Cortes", color="info", id="btn-collapse", size="lg"), md="1", style={"margin-top": "10px"}),
-        dbc.Col(dbc.Button("Deletar", color="danger", id="btn-delete-cut", size="lg"), md="1", style={"margin-top": "10px"}),
-        dbc.Col(dcc.Dropdown(id="dd-cut-scenes", style={"margin-top": "10px"}, placeholder="Selecione seu corte"), md="10")
+        dbc.Col(
+            dbc.Button(
+                "Cortes",
+                color="info",
+                id="btn-collapse",
+                size="lg"
+            ),
+            md="1",
+            style={"margin-top": "10px"}
+        ),
+
+        dbc.Col(
+            dbc.Button(
+                "Deletar",
+                color="danger",
+                id="btn-delete-cut",
+                size="lg"
+            ),
+            md="1",
+            style={"margin-top": "10px"}
+        ),
+
+        dbc.Col(
+            dcc.Dropdown(
+                id="dd-cut-scenes",
+                style={"margin-top": "10px"},
+                placeholder="Selecione seu corte"
+            ),
+            md="10"
+        )
     ]),
+    
     dash_player.DashPlayer(
         id='video-player',
         controls=True,
@@ -59,7 +114,7 @@ l_controls = dbc.Col([
         height="600px",
         intervalSecondsLoaded=200,
         style={"margin-top": "20px"}
-    ),
+    )
 ])
 
 @app.callback(
@@ -101,6 +156,21 @@ def update_btn_end1(n_clicks, value):
 )
 def update_video_options(selected_sport):
     return [{"label": i['video'], "value": i['url']} for i in MY_VIDEOS if i['sport'] == selected_sport]
+
+@app.callback(
+    Output('rd-cut-kind', 'options'),
+    [Input('rd-sports', 'value')]
+)
+def update_movie_options(selected_sport):
+    return get_movies(selected_sport)
+
+@app.callback(
+    Output('rd-cut-kind', 'value'),
+    [Input('rd-sports', 'value')]
+)
+def update_default_movie(selected_sport):
+    movies = get_movies(selected_sport)
+    return movies[0]['value'] if movies else None
 
 @app.callback(
     Output('dd-cut-scenes', 'options'),
