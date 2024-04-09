@@ -6,7 +6,7 @@ from dash.exceptions import PreventUpdate
 from app import app
 from left_video import *
 from notes_form import *
-from main import USERNAME
+from landpage import USERNAME
 
 # Layout da página principal (tela inicial)
 layout = dbc.Container(
