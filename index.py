@@ -25,7 +25,8 @@ layout = dbc.Container(
                             html.Img(id="logo", src=app.get_asset_url("bg_aeria.png"), height=50, 
                             style={"margin-bottom": "20px"}),
                             html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "color": "var(--light-text-color)", "marginLeft": "20px", "display": "inline"}),
-                            html.Div(id='username-output')
+                            html.H3(id='username-output'),
+                            ])
                         ]
                     ),
 
