@@ -90,10 +90,6 @@ def get_sports():
     sports = sports_collection.find()
     return sports 
 
-def get_sport(sport):
-    sport = sports_collection.find_one({'sport': sport})
-    return sport if sport else None 
-
 def remove_sport(sport): 
     sports_collection.delete_one({'sport': sport})
 
@@ -113,8 +109,7 @@ def remove_movie(mov):
 # =================================
 
 # My videos
-USERNAME = get_current_user()
-MY_VIDEOS = get_videos(USERNAME)
+
 
 #{
 #    "Forehand compilation": 'https://www.youtube.com/watch?v=_7xV_CE8y28&list=PLjZrvsjkqCCgVIeTfKa-pipLiqZ-pXWjL',

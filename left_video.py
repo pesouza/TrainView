@@ -16,6 +16,11 @@ def get_movies():
     options = [{'label': movie['mov'], 'value': movie['mov_value']} for movie in movies]
     return options
 
+USERNAME = get_current_user()
+MY_VIDEOS = get_videos(USERNAME)
+MY_SPORTS = get_sports()
+
+
 l_controls = dbc.Col([
                     dcc.Dropdown(id="dd-my-videos",
                             options=[{"label": i['video'], "value": i['url']} for i in MY_VIDEOS],
