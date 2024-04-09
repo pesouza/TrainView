@@ -7,14 +7,6 @@ import dash
 from app import app
 from globals import *
 
-def add_movie(sport, mov):
-    mov_value = mov.lower().replace(" ", "_")  # Convertendo o movimento para o formato de valor
-    movies_collection.insert_one({'sport': sport, 'mov': mov, 'mov_value': mov_value})
-
-def get_movies():
-    movies = movies_collection.find()
-    options = [{'label': movie['mov'], 'value': movie['mov_value']} for movie in movies]
-    return options
 
 USERNAME = get_current_user()
 MY_VIDEOS = get_videos(USERNAME)

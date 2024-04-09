@@ -40,7 +40,7 @@ def add_video(user, video, url):
 
 def get_videos(user):
     videos = videos_collection.find({'username': user})
-    return videos
+    return list(videos)
 
 def get_video(user, video):
     video = videos_collection.find_one({'username': user, 'video': video})
@@ -62,7 +62,7 @@ def get_scene(user, video, scene):
 
 def get_scenes(user, video):
     scenes = scenes_collection.find({'username': user, 'video': video})
-    return scenes
+    return list(scenes)
 
 # =================================
 def add_notes(user, video, scene, notes):
@@ -80,7 +80,7 @@ def delete_note(user, video, scene):
 
 def get_notes(user, video):
     notes = notes_collection.find({'username': user, 'video': video})
-    return notes
+    return list(notes)
 
 # =================================
 def add_sport(sport):
@@ -88,7 +88,7 @@ def add_sport(sport):
 
 def get_sports():
     sports = sports_collection.find()
-    return sports 
+    return list(sports)
 
 def remove_sport(sport): 
     sports_collection.delete_one({'sport': sport})
