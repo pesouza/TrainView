@@ -26,7 +26,6 @@ layout = dbc.Container(
                             style={"margin-bottom": "20px"}),
                             html.H2("TrainView", style={"font-weight": "bold", "font-size": "32px", "color": "var(--light-text-color)", "marginLeft": "20px", "display": "inline"}),
                             html.H3(id='username-output'),
-                            ])
                         ]
                     ),
 
