@@ -34,7 +34,7 @@ l_controls = dbc.Col([
                                     options=get_movies(),
                                     value=get_movies()[0]['value'],  # Defina o valor padrão como o primeiro da lista obtida
                                     labelStyle={'display': 'inline-block', 'margin': '10px'}
-                                )
+                                ),
 """                                 dcc.RadioItems(
                                     id='rd-cut-kind',
                                     options=[{'label': 'Forehand', 'value': 'forehand'},
