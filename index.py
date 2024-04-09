@@ -4,9 +4,10 @@ import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 
 from app import app
+from globals import *
 from left_video import *
 from notes_form import *
-# import callbacks
+
 
 
 # Layout da página principal (tela inicial)
@@ -48,14 +49,10 @@ def update_playbackRate(value):
 
 # Callback para exibir o nome de usuário
 @app.callback(Output('username-output', 'children'),
-              [Input('page-content', 'children')],
-              [State('stored-params', 'data')])
-def display_username(children, stored_params):
-    if stored_params and 'username' in stored_params:
-        return f'Bem-vindo, {stored_params["username"]}!'
-    else:
-        raise PreventUpdate
-        
+              Input('page-content', 'children'),)
+def display_username(children):
+    return f'Bem-vindo, {USERNAME}!'
+
 # Callback para exibir o nome 
 if __name__ == '__main__':
     app.run_server(debug=True)

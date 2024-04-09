@@ -3,14 +3,24 @@ import json
 from pymongo import MongoClient
 
 
+USERNAME = ''  
+
 # Conectar ao MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['trainview']
+usuarios_collection = db['users']
 videos_collection = db['videos']
 scenes_collection = db['scenes']
 notes_collection = db['notes']
 
 # =================================
+def get_user(username):
+    user = usuarios_collection.find_one({'username': username})
+    return user
+
+def save_user(user): 
+    usuarios_collection.insert_one(user)
+
 def add_video(user, video, url):
     videos_collection.insert_one({'username': user, 'video': video, 'url': url})
 
