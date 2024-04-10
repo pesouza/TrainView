@@ -255,7 +255,7 @@ def toggle_modal_add_video(add_clicks, close_clicks, is_open):
 
 # Callback para adicionar um novo vídeo ao banco de dados e fechar o formulário "popup"
 @app.callback(
-    [Output("modal-add-video", "is_open"), Output("dd-my-videos", "options")],
+    Output("dd-my-videos", "options"),
     [Input("btn-add-video", "n_clicks")],
     [State("input-video-name", "value"), State("input-video-url", "value"), State("rd-sports", "value")]
 )
@@ -264,7 +264,6 @@ def add_new_video_and_update_options(n_clicks, video_name, video_url, selected_s
         add_video(USERNAME, selected_sport, video_name, video_url)
         videos = get_videos(USERNAME, selected_sport)
         options = [{"label": i['video'], "value": i['url']} for i in videos]
-        return False, options
-    return dash.no_update, dash.no_update
+        return options
+    return dash.no_update
 
-# Restante dos callbacks ...
