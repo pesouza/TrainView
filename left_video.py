@@ -8,24 +8,23 @@ from app import app
 from globals import *
 
 USERNAME = get_current_user()
-MY_VIDEOS = get_videos(USERNAME)
 MY_SPORTS = get_sports()
 
 l_controls = dbc.Col([
-    dcc.Dropdown(
-        id="dd-my-videos",
-        options=[{"label": i['video'], "value": i['url']} for i in MY_VIDEOS],
-        value=MY_VIDEOS[0]['url'] if MY_VIDEOS else None,
-        style={"margin-top": "10px"},
-        placeholder="Selecione seu vídeo"
-    ),
-
     dcc.Dropdown(
         id='rd-sports',
         options=[{"label": sport, "value": sport} for sport in MY_SPORTS],
         value=MY_SPORTS[0] if MY_SPORTS else None,
         style={"margin-top": "10px"},
         placeholder="Selecione seu esporte"
+    ),
+
+    dcc.Dropdown(
+        id="dd-my-videos",
+        options=[{"label": i['video'], "value": i['url']} for i in get_videos(USERNAME, MY_SPORTS[0])],
+        value=get_videos(USERNAME, MY_SPORTS[0])[0]['url'] if get_videos(USERNAME, MY_SPORTS[0]) else None,
+        style={"margin-top": "10px"},
+        placeholder="Selecione seu vídeo"
     ),
 
     dbc.Collapse(
@@ -52,7 +51,8 @@ l_controls = dbc.Col([
                     "Adicionar Golpe",
                     id="btn-add-movie",
                     color="primary",
-                    className="mr-2"
+                    className="mr-2",
+                    style={"margin-top": "10px", "margin-bottom": "10px"}
                 ),
                 dbc.Row([
                     dbc.Button(
@@ -170,7 +170,7 @@ def update_btn_end1(n_clicks, value):
     [Input('rd-sports', 'value')]
 )
 def update_video_options(selected_sport):
-    return [{"label": i['video'], "value": i['url']} for i in MY_VIDEOS if i['sport'] == selected_sport]
+    return [{"label": i['video'], "value": i['url']} for i in get_videos(USERNAME, selected_sport)]
 
 @app.callback(
     Output('rd-cut-kind', 'options'),
@@ -227,8 +227,6 @@ def control_scene_time1(cut_scene, url, current_time):
 def add_new_movie(n_clicks, selected_sport, new_movie):
     if n_clicks:
         if new_movie:
-            add_movie(selected_sport, new_movie)
-            # Após adicionar o novo golpe, você pode limpar o campo de entrada
+            add_movie(selected_sport, new_movie)  
             return ''
-    # Se nenhum clique ocorrer, retorne o valor atual do campo
     return new_movie

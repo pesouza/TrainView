@@ -35,15 +35,15 @@ def save_user(user):
     usuarios_collection.insert_one(user)
 
 # =================================
-def add_video(user, video, url):
-    videos_collection.insert_one({'username': user, 'video': video, 'url': url})
+def add_video(user, sport, video, url):
+    videos_collection.insert_one({'username': user, 'sport': sport, 'video': video, 'url': url})
 
-def get_videos(user):
-    videos = videos_collection.find({'username': user})
+def get_videos(user, sport):
+    videos = videos_collection.find({'username': user, 'sport': sport})
     return list(videos)
 
-def get_video(user, video):
-    video = videos_collection.find_one({'username': user, 'video': video})
+def get_video(user, sport, video):
+    video = videos_collection.find_one({'username': user, 'sport': sport, 'video': video})
     return video if video else None 
 
 def delete_video(user, video):
