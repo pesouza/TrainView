@@ -242,7 +242,7 @@ def add_new_movie(n_clicks, selected_sport, new_movie):
             return ''
     return new_movie
 
-# Callback para abrir e fechar o formulário "popup" de adicionar novo vídeo
+# Callbacks para abrir e fechar o formulário "popup" de adicionar novo vídeo
 @app.callback(
     Output("modal-add-video", "is_open"),
     [Input("btn-add-video", "n_clicks"), Input("close-add-video", "n_clicks")],
