@@ -20,11 +20,12 @@ l_controls = dbc.Col([
         placeholder="Selecione seu vídeo"
     ),
 
-    dcc.RadioItems(
+    dcc.Dropdown(
         id='rd-sports',
         options=[{"label": sport, "value": sport} for sport in MY_SPORTS],
         value=MY_SPORTS[0] if MY_SPORTS else None,
-        labelStyle={'display': 'inline-block', 'margin': '10px'}
+        style={"margin-top": "10px"},
+        placeholder="Selecione seu esporte"
     ),
 
     dbc.Collapse(
@@ -36,17 +37,22 @@ l_controls = dbc.Col([
                     type="text",
                     style={"margin-bottom": "10px"}
                 ),
-                dbc.Button(
-                    "Adicionar Golpe",
-                    id="btn-add-movie",
-                    color="primary",
-                    className="mr-2"
+                dcc.RadioItems(
+                    id='rd-cut-kind',
+                    labelStyle={'display': 'inline-block', 'margin': '10px'}
                 ),
                 dbc.Input(
                     id="inpt-mov",
                     placeholder="Novo golpe",
                     type="text",
+                    size="lg",
                     style={"margin-top": "10px"}
+                ),
+                dbc.Button(
+                    "Adicionar Golpe",
+                    id="btn-add-movie",
+                    color="primary",
+                    className="mr-2"
                 ),
                 dbc.Row([
                     dbc.Button(
@@ -102,7 +108,7 @@ l_controls = dbc.Col([
                 size="lg"
             ),
             md="1",
-            style={"margin-top": "10px"}
+            style={"margin-top": "10px", "margin-right": "10px"}
         ),
 
         dbc.Col(
@@ -212,3 +218,17 @@ def control_scene_time1(cut_scene, url, current_time):
                 return start_time
             elif current_time > scene['position'][1]:
                 return start_time
+
+@app.callback(
+    Output('inpt-mov', 'value'),
+    [Input('btn-add-movie', 'n_clicks'), Input('rd-sports', 'value')],
+    [State('inpt-mov', 'value')]
+)
+def add_new_movie(n_clicks, selected_sport, new_movie):
+    if n_clicks:
+        if new_movie:
+            add_movie(selected_sport, new_movie)
+            # Após adicionar o novo golpe, você pode limpar o campo de entrada
+            return ''
+    # Se nenhum clique ocorrer, retorne o valor atual do campo
+    return new_movie
