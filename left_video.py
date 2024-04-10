@@ -248,19 +248,21 @@ def add_new_movie(n_clicks, selected_sport, new_movie):
     [Input("btn-add-video", "n_clicks"), Input("close-add-video", "n_clicks")],
     [State("modal-add-video", "is_open")],
 )
-def toggle_modal_add_video(n_add_clicks, n_close_clicks, is_open):
-    if n_add_clicks or n_close_clicks:
+def toggle_modal_add_video(add_clicks, close_clicks, is_open):
+    if add_clicks or close_clicks:
         return not is_open
     return is_open
 
-# Callback para adicionar um novo vídeo ao banco de dados
+# Callback para adicionar um novo vídeo ao banco de dados e fechar o formulário "popup"
 @app.callback(
-    Output("modal-add-video", "is_open"),
+    [Output("modal-add-video", "is_open"), Output("dd-my-videos", "options")],
     [Input("btn-add-video", "n_clicks")],
-    [State("input-video-name", "value"), State("input-video-url", "value")]
+    [State("input-video-name", "value"), State("input-video-url", "value"), State("rd-sports", "value")]
 )
-def add_new_video_to_db(n_clicks, video_name, video_url):
+def add_new_video_and_update_options(n_clicks, video_name, video_url, selected_sport):
     if n_clicks and video_name and video_url:
-        add_video(USERNAME, MY_SPORTS[0], video_name, video_url)
-        return False
-    return True
+        add_video(USERNAME, selected_sport, video_name, video_url)
+        videos = get_videos(USERNAME, selected_sport)
+        options = [{"label": i['video'], "value": i['url']} for i in videos]
+        return False, options
+    return True, dash.no_update
