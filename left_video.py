@@ -176,12 +176,12 @@ def update_btn_end1(n_clicks, value):
     value = 10 if value is None else value
     return "FIM: {:.1f}".format(value)
 
-@app.callback(
-    Output('dd-my-videos', 'options'),
-    [Input('rd-sports', 'value')]
-)
-def update_video_options(selected_sport):
-    return [{"label": i['video'], "value": i['url']} for i in get_videos(USERNAME, selected_sport)]
+# @app.callback(
+#     Output('dd-my-videos', 'options'),
+#     [Input('rd-sports', 'value')]
+# )
+# def update_video_options(selected_sport):
+#     return [{"label": i['video'], "value": i['url']} for i in get_videos(USERNAME, selected_sport)]
 
 @app.callback(
     Output('rd-cut-kind', 'options'),
@@ -253,17 +253,22 @@ def toggle_modal_add_video(add_clicks, close_clicks, is_open):
         return not is_open
     return is_open
 
-# Callback para adicionar um novo vídeo ao banco de dados e fechar o formulário "popup"
+# Callback para adicionar um novo vídeo ao banco de dados e atualizar as opções do dropdown
 @app.callback(
     Output("dd-my-videos", "options"),
     [Input("btn-add-video", "n_clicks")],
     [State("input-video-name", "value"), State("input-video-url", "value"), State("rd-sports", "value")]
 )
 def add_new_video_and_update_options(n_clicks, video_name, video_url, selected_sport):
+    # Verifica se o botão "Adicionar" foi clicado e se os campos do vídeo estão preenchidos
     if n_clicks and video_name and video_url:
+        # Adiciona o novo vídeo ao banco de dados
         add_video(USERNAME, selected_sport, video_name, video_url)
+        # Atualiza as opções do dropdown "dd-my-videos" com os novos vídeos
         videos = get_videos(USERNAME, selected_sport)
         options = [{"label": i['video'], "value": i['url']} for i in videos]
+        # Retorna as novas opções do dropdown
         return options
+    # Se não houver ação, retorna os valores atuais sem alterações
     return dash.no_update
 
