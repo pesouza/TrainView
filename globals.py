@@ -88,7 +88,7 @@ def add_sport(sport):
 
 def get_sports():
     sports = sports_collection.find()
-    return list(sports)
+    return list({sport['sport'] for sport in sports})
 
 def remove_sport(sport): 
     sports_collection.delete_one({'sport': sport})
