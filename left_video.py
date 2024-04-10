@@ -27,6 +27,17 @@ l_controls = dbc.Col([
         placeholder="Selecione seu vídeo"
     ),
 
+    # Formulário "popup" para inserir novo vídeo
+    dbc.Modal([
+        dbc.ModalHeader("Adicionar Novo Vídeo"),
+        dbc.ModalBody([
+            dbc.Input(id="input-video-name", placeholder="Nome do vídeo"),
+            dbc.Input(id="input-video-url", placeholder="URL do vídeo"),
+            dbc.Button("Adicionar", id="btn-add-video", color="primary", className="mr-2")
+        ]),
+        dbc.ModalFooter(dbc.Button("Fechar", id="close-add-video", color="secondary"))
+    ], id="modal-add-video", centered=True),
+
     dbc.Collapse(
         dbc.Card([   
             dbc.CardBody([
@@ -230,3 +241,26 @@ def add_new_movie(n_clicks, selected_sport, new_movie):
             add_movie(selected_sport, new_movie)  
             return ''
     return new_movie
+
+# Callback para abrir e fechar o formulário "popup" de adicionar novo vídeo
+@app.callback(
+    Output("modal-add-video", "is_open"),
+    [Input("btn-add-video", "n_clicks"), Input("close-add-video", "n_clicks")],
+    [State("modal-add-video", "is_open")],
+)
+def toggle_modal_add_video(n_add_clicks, n_close_clicks, is_open):
+    if n_add_clicks or n_close_clicks:
+        return not is_open
+    return is_open
+
+# Callback para adicionar um novo vídeo ao banco de dados
+@app.callback(
+    Output("modal-add-video", "is_open"),
+    [Input("btn-add-video", "n_clicks")],
+    [State("input-video-name", "value"), State("input-video-url", "value")]
+)
+def add_new_video_to_db(n_clicks, video_name, video_url):
+    if n_clicks and video_name and video_url:
+        add_video(USERNAME, MY_SPORTS[0], video_name, video_url)
+        return False
+    return True
