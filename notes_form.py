@@ -1,11 +1,11 @@
 import dash
-from dash import html, dcc
-from dash.dependencies import Input, Output, State, MATCH, ALL
+from dash import html
+from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 from app import app
 from copy import deepcopy
 from globals import *
-import json
+
 
 
 notes_form = html.Div([
@@ -37,7 +37,7 @@ def update_notes(n_clicks, note, url, cut_scene):
         notes_collection.update_one({"_id": key_name}, {"$set": {"note": note}}, upsert=True)
         return note
         
-    if ("video-player.url" in trigg or "dd-cut-scenes.value" in trigg) and key_name in DICT_NOTES.keys():
+    if ("video-player.url" in trigg or "dd-cut-scenes.value" in trigg):
         # Recuperar nota do MongoDB
         saved_note = notes_collection.find_one({"_id": key_name})
         if saved_note:
